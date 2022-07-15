@@ -26,4 +26,15 @@ public class ItemController {
     public ArrayList<Item> consultaItem(String titulo){
         return new Item().consultaItens(titulo);
     }
+    
+    public boolean atualizaItem(Integer codItem,String tipo,Double preco){
+        Item item = new Item(codItem,tipo,preco);
+        return item.atualizaItem(item);
+        
+    }
+    
+    public boolean deletarItem(Integer codItem){
+        Item item = new Item();
+        return item.deletarItem(codItem);
+    }
 }

@@ -47,6 +47,12 @@ public class Item {
         this.preco = preco;
     }
 
+    public Item(Integer codItem, String tipo, Double preco) {
+        this.codItem = codItem;
+        this.tipo = tipo;
+        this.preco = preco;
+    }
+
     public Integer getCodItem() {
         return codItem;
     }
@@ -108,5 +114,13 @@ public class Item {
     }
     public ArrayList<Item> consultaItens(String titulo){
         return new ItemDAO().consultaItens(titulo);
+    }
+    
+    public boolean atualizaItem(Item item){
+        return new ItemDAO().atualizarItem(item);
+    }
+    
+    public boolean deletarItem(Integer id){
+        return new ItemDAO().deletarItem(id);
     }
 }

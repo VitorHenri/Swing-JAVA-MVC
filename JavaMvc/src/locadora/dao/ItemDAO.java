@@ -63,4 +63,47 @@ public class ItemDAO {
         
     
     }
+    
+    public boolean atualizarItem(Item item){
+        try{
+            conn = DB.createConnection();
+            sql = "update item set tipo=?,preco=? where codItem=?";
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, item.getTipo());
+            pstm.setDouble(2, item.getPreco());
+            pstm.setInt(3, item.getCodItem());
+            pstm.executeUpdate();
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                conn.close();
+                pstm.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    
+    public boolean deletarItem(Integer id){
+        try{
+        conn = DB.createConnection();
+        sql = "delete from item where codItem="+id;
+        pstm = conn.prepareStatement(sql);
+        pstm.executeUpdate();
+        return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                conn.close();
+                pstm.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 }

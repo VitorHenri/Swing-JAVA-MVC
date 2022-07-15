@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Itens" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="feb92e06-99e5-47ea-9aa3-f5137d641540">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL LOCAL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select * from item i left join filme f on i.codFilme=f.id]]>
+	</queryString>
+	<field name="coditem" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="coditem"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="preco" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="preco"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="datalocacao" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="datalocacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="codfilme" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codfilme"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="codcliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codcliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filme"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filme"/>
+	</field>
+	<field name="genero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="genero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filme"/>
+	</field>
+	<field name="sinopse" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sinopse"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filme"/>
+	</field>
+	<field name="duracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="duracao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="filme"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="10" width="385" height="55" uuid="0a095455-2797-4fdb-bc8f-0fc029b0a9b3"/>
+				<textElement>
+					<font size="29"/>
+				</textElement>
+				<text><![CDATA[Relatório de Itens do sistema]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="90" height="21" uuid="665cf861-e4aa-417d-927f-fde1808341a3"/>
+				<text><![CDATA[Código Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="85" height="21" uuid="cff795d9-480e-49d3-b1d6-8065e0ef75b1"/>
+				<text><![CDATA[Código Filme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="0" width="124" height="21" uuid="e8a815bf-c5e7-467f-a7ce-497fa8e50af1"/>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="90" height="21" uuid="d8bb9314-9d14-4941-8055-7e874ee9ca1b"/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="0" width="85" height="21" uuid="7fde22bf-2316-4a1e-9995-e9d8be8a23b9"/>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="0" width="75" height="21" uuid="3100b470-56d8-46e3-b853-33fafa92d503"/>
+				<text><![CDATA[Sinopse]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="90" height="30" uuid="f74e87ac-54fe-48b9-9b50-22cabb71121d"/>
+				<textFieldExpression><![CDATA[$F{coditem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="84" height="30" uuid="77b7ab60-68c0-4c8d-9536-4559602dbb2b"/>
+				<textFieldExpression><![CDATA[$F{codfilme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="0" width="125" height="30" uuid="d4ad5478-6d6a-45e6-b911-e3db1b0e5f45"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="90" height="30" uuid="4ec2ffd6-150c-40ef-9577-bf3a1d7ae494"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="85" height="30" uuid="05e52f67-ffb7-45b8-b503-1d00950b6b2e"/>
+				<textFieldExpression><![CDATA[$F{preco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="75" height="30" uuid="c5f7a359-15c9-4d9d-b37c-0ed7ce5a3ed8"/>
+				<textFieldExpression><![CDATA[$F{sinopse}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

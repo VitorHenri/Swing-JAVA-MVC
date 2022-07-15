@@ -34,6 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton1GerarRF2 = new javax.swing.JButton();
         jButton1GerarRF3 = new javax.swing.JButton();
         jButton1GerarRF4 = new javax.swing.JButton();
+        jButton1RelatorioItem = new javax.swing.JButton();
         jMenuBar1TelaPrincipal = new javax.swing.JMenuBar();
         jMenu1Locacao = new javax.swing.JMenu();
         jMenuItem1Alugar = new javax.swing.JMenuItem();
@@ -88,14 +89,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButton1RelatorioItem.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jButton1RelatorioItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pipoca.png"))); // NOI18N
+        jButton1RelatorioItem.setText("Gerar Relatório Item");
+        jButton1RelatorioItem.setMaximumSize(new java.awt.Dimension(266, 70));
+        jButton1RelatorioItem.setMinimumSize(new java.awt.Dimension(266, 70));
+        jButton1RelatorioItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1RelatorioItemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1PrincipalLayout = new javax.swing.GroupLayout(jPanel1Principal);
         jPanel1Principal.setLayout(jPanel1PrincipalLayout);
         jPanel1PrincipalLayout.setHorizontalGroup(
             jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1PrincipalLayout.createSequentialGroup()
-                .addContainerGap(382, Short.MAX_VALUE)
-                .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addContainerGap(386, Short.MAX_VALUE)
+                .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1RelatorioItem, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
             .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
                     .addGap(48, 48, 48)
@@ -112,7 +126,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addComponent(jButton1RelatorioItem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
             .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
                     .addGap(44, 44, 44)
@@ -132,6 +148,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1Alugar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jMenuItem1Alugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/seta.png"))); // NOI18N
         jMenuItem1Alugar.setText("Alugar");
+        jMenuItem1Alugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1AlugarActionPerformed(evt);
+            }
+        });
         jMenu1Locacao.add(jMenuItem1Alugar);
 
         jMenuItem2Consulta.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -209,7 +230,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(77, 77, 77)
-                .addComponent(jPanel1Principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
                 .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
@@ -268,6 +289,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenu1SairMouseClicked
 
+    private void jButton1RelatorioItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1RelatorioItemActionPerformed
+        new ReportController().Item();
+    }//GEN-LAST:event_jButton1RelatorioItemActionPerformed
+
+    private void jMenuItem1AlugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1AlugarActionPerformed
+        TelaAlugarFilme telaAlugarFilme = new TelaAlugarFilme();
+        telaAlugarFilme.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1AlugarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,6 +341,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1GerarRF2;
     private javax.swing.JButton jButton1GerarRF3;
     private javax.swing.JButton jButton1GerarRF4;
+    private javax.swing.JButton jButton1RelatorioItem;
     private javax.swing.JMenu jMenu1Locacao;
     private javax.swing.JMenu jMenu1Sair;
     private javax.swing.JMenu jMenu2Cadastro;

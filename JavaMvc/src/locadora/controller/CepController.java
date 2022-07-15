@@ -13,7 +13,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import javax.swing.JOptionPane;
-import locadora.view.TelaCadastroCliente;
+
 /**
  *
  * @author Usuario

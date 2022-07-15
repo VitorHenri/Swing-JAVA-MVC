@@ -5,6 +5,7 @@
 package locadora.view;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import locadora.controller.ItemController;
 import locadora.model.Item;
@@ -15,6 +16,7 @@ import locadora.model.Item;
  */
 public class TelaConsultaItem extends javax.swing.JFrame {
     TelaCadastroItem telaCadastroItem = null;
+    TelaAlugarFilme telaAlugarFilme = null;
     /**
      * Creates new form TelaConsultaItem
      */
@@ -25,6 +27,11 @@ public class TelaConsultaItem extends javax.swing.JFrame {
     public TelaConsultaItem(TelaCadastroItem telaCadastroItem){
         initComponents();
         this.telaCadastroItem = telaCadastroItem;
+    }
+    
+    public TelaConsultaItem(TelaAlugarFilme telaAlugarFilme){
+        initComponents();
+        this.telaAlugarFilme = telaAlugarFilme;
     }
 
     /**
@@ -193,11 +200,15 @@ public class TelaConsultaItem extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if(evt.getClickCount()==2){
-            Integer codItem = (Integer)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1);
-            Integer codFilme = (Integer)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
-            String titulo = (String)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3);
-            String tipo = (String)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
-            Double preco = (Double)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 5);
+            Integer codItem = (Integer)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
+            Integer codFilme = (Integer)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1);
+            String titulo = (String)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
+            String tipo = (String)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3);
+            Double preco = (Double)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
+            JOptionPane.showMessageDialog(rootPane, "Atualize os dados desse Item");
+            telaCadastroItem.buscarItem(codFilme, codItem,titulo,tipo,preco);
+            telaCadastroItem.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_jTable1MouseClicked
 

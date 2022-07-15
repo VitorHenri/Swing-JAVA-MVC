@@ -13,6 +13,7 @@ import locadora.controller.ItemController;
  */
 public class TelaCadastroItem extends javax.swing.JFrame {
     private Integer codFilme = 0;
+    private Integer codItem=0;
     /**
      * Creates new form TelaCadastroItem
      */
@@ -20,6 +21,22 @@ public class TelaCadastroItem extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+    public void buscarItem(Integer codFilme,Integer codItem,String titulo,String tipo,Double preco){
+       this.codItem = codItem;
+       jTextField1Titulo.setText(titulo);
+       for(int i=0;i<jComboBox1Tipo.getItemCount();i++){
+           if(jComboBox1Tipo.getItemAt(i).equals(tipo)){
+               jComboBox1Tipo.setSelectedIndex(i);
+               break;
+           }
+       }
+       jTextField1Preco.setText(preco.toString());
+        jButton1Buscar.setEnabled(false);
+        jButton1Salvar.setText("Atualizar");
+        jLabel1.setText("Atualizar Item");
+        jButton1Apagar.setEnabled(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +59,7 @@ public class TelaCadastroItem extends javax.swing.JFrame {
         jButton3Cancelar = new javax.swing.JButton();
         jButton4Consultar = new javax.swing.JButton();
         jTextField1Preco = new javax.swing.JTextField();
+        jButton1Apagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -109,6 +127,15 @@ public class TelaCadastroItem extends javax.swing.JFrame {
 
         jTextField1Preco.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
 
+        jButton1Apagar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jButton1Apagar.setText("Apagar");
+        jButton1Apagar.setEnabled(false);
+        jButton1Apagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ApagarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -140,7 +167,9 @@ public class TelaCadastroItem extends javax.swing.JFrame {
                 .addComponent(jButton3Cancelar)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4Consultar)
-                .addGap(0, 232, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1Apagar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +196,8 @@ public class TelaCadastroItem extends javax.swing.JFrame {
                     .addComponent(jButton1Salvar)
                     .addComponent(jButton2Limpar)
                     .addComponent(jButton3Cancelar)
-                    .addComponent(jButton4Consultar))
+                    .addComponent(jButton4Consultar)
+                    .addComponent(jButton1Apagar))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -201,6 +231,7 @@ public class TelaCadastroItem extends javax.swing.JFrame {
     public void buscarFilme(Integer codFilme,String nome){
         this.codFilme =codFilme;
         jTextField1Titulo.setText(nome);
+     
     }
     
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -232,18 +263,47 @@ public class TelaCadastroItem extends javax.swing.JFrame {
         Double preco = Double.parseDouble(jTextField1Preco.getText().replace(",", "."));
         boolean sucesso;
         try{
+            if(codItem==0){
             sucesso = ic.cadastrarItem(codFilme, jTextField1Titulo.getText(),(String)jComboBox1Tipo.getSelectedItem(),preco);
             if(sucesso)
                 JOptionPane.showMessageDialog(rootPane, "Item cadastrado com sucesso");
             else
                 JOptionPane.showMessageDialog(rootPane, "Erro ao cadastrar item, verifique os dados");
+            }
+            else{
+                sucesso = ic.atualizaItem(codItem, jComboBox1Tipo.getSelectedItem().toString(), preco);
+                if(sucesso){
+                    JOptionPane.showMessageDialog(rootPane, "Item ATUALIZADO com sucesso");
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Erro ao ATUALIZAR item, verifique os dados");
+                }
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1SalvarActionPerformed
 
+    private void jButton1ApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ApagarActionPerformed
+       try{
+           ItemController ic = new ItemController();
+           boolean sucesso;
+           if(JOptionPane.showConfirmDialog(rootPane, "Tem certeze que deseja apagar esse item?", "Atenção", JOptionPane.YES_OPTION, JOptionPane.NO_OPTION)==0){              
+                sucesso = ic.deletarItem(codItem);
+                    if(sucesso)
+                        JOptionPane.showMessageDialog(rootPane, "Item deletado com sucesso");
+                    else
+                        JOptionPane.showMessageDialog(rootPane, "Falha ao deletar item");
+               }
+          
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+       this.dispose();
+    }//GEN-LAST:event_jButton1ApagarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1Apagar;
     private javax.swing.JButton jButton1Buscar;
     private javax.swing.JButton jButton1Salvar;
     private javax.swing.JButton jButton2Limpar;

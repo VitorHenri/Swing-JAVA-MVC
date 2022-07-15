@@ -6,6 +6,7 @@ package locadora.controller;
 
 import java.sql.Connection;
 import locadora.DB.DB;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -57,6 +58,18 @@ public class ReportController {
         
         }catch(Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void Item(){
+        try{
+        jdesign = JRXmlLoader.load("src\\reports\\itens.jrxml");
+        jreport = JasperCompileManager.compileReport(jdesign);
+        jprint = JasperFillManager.fillReport(jreport, null,conn);
+        JasperViewer.viewReport(jprint, false);
+        }catch(JRException e){
+            e.printStackTrace();
+        
         }
     }
 }

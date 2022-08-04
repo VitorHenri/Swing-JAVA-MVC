@@ -5,6 +5,8 @@
 package locadora.DB;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 /**
  *
  * @author Usuario
@@ -21,6 +23,19 @@ public class DB {
             }
             return conn;
         }
+    
+    public static void closeConnection(ResultSet rs,PreparedStatement pstm,Connection conn){
+        try{
+            if(rs!=null)
+                rs.close();
+            if(pstm!=null)
+                pstm.close();
+            if(conn!=null)
+                conn.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
         
 }
 

@@ -24,6 +24,11 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(Integer codCliente,String nome){
+        this.codCliente = codCliente;
+        this.nome = nome;
+    }
+    
     public Cliente(String nome, String cpf, String email, String endereco, Date dNascimento) {
         this.nome = nome;
         this.cpf = cpf;
@@ -40,8 +45,11 @@ public class Cliente {
         this.endereco = endereco;
         this.dNascimento = dNascimento;
     }
-    
-    
+
+    public Cliente(Integer codCliente) {
+        this.codCliente = codCliente;
+    }
+
 
     public Integer getCodCliente() {
         return codCliente;

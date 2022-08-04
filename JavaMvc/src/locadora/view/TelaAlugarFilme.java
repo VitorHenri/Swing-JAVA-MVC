@@ -4,17 +4,71 @@
  */
 package locadora.view;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import locadora.controller.AlugarController;
+import locadora.model.Item;
+import locadora.util.SistemaUtil;
+
 /**
  *
  * @author Usuario
  */
-public class TelaAlugarFilme extends javax.swing.JFrame {
-
+public class TelaAlugarFilme extends javax.swing.JFrame implements SistemaUtil {
+    Integer codItem;
+    String titulo;
+    String tipo;
+    Double preco;
+    String nomeCliente;
+    Integer codCliente;
+    Date now = new Date();
+    Set<Item> itensAdicionados = new HashSet<>();
+    Calendar c = Calendar.getInstance();
+    
+    
     /**
      * Creates new form TelaAlugarFilme
      */
+    
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     public TelaAlugarFilme() {
+        TelaConfiguracaoSistema configs = new TelaConfiguracaoSistema();
         initComponents();
+        jFormattedTextField1Locacao.setText(sdf.format(now));
+        if(configs.getIsDataRetroativa())
+            jFormattedTextField1Locacao.setEnabled(true);
+        else
+            jFormattedTextField1Locacao.setEnabled(false);
+        c.setTime(now);
+        c.add(Calendar.DATE, configs.getDiasLocacao());
+        jFormattedTextField1Devolucao.setText(sdf.format(c.getTime()));
+        
+    }
+    
+    public void buscarCliente(Integer codCliente,String nome){
+        nomeCliente = nome;
+        this.codCliente = codCliente;
+        jTextField2NomeCliente.setText(nome);
+        if(codItem!=null && codCliente!= null)
+            jButton3Registrar.setEnabled(true);
+    }
+            
+    public void buscarItem(Integer codItem,String titulo,String tipo,Double preco){
+        this.codItem = codItem;
+        this.titulo = titulo;
+        this.tipo = tipo;
+        this.preco = preco;
+        jTextField1TituloFilme.setText(titulo);
     }
 
     /**
@@ -26,21 +80,43 @@ public class TelaAlugarFilme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1TituloFilme = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextField2NomeCliente = new javax.swing.JTextField();
-        jFormattedTextField1DataLocacao = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jFormattedTextField2DataDevolucao = new javax.swing.JFormattedTextField();
         jButton2 = new javax.swing.JButton();
         jButton3Registrar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2RegistraFilmes = new javax.swing.JTable();
+        jTextField1Total = new javax.swing.JTextField();
+        jLabel6Total = new javax.swing.JLabel();
+        jFormattedTextField1Locacao = new javax.swing.JFormattedTextField();
+        jFormattedTextField1Devolucao = new javax.swing.JFormattedTextField();
+        jButton3AdicionarItem = new javax.swing.JButton();
+        jButton3Cancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -55,6 +131,7 @@ public class TelaAlugarFilme extends javax.swing.JFrame {
         jLabel2.setToolTipText("");
 
         jTextField1TituloFilme.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jTextField1TituloFilme.setEnabled(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/lupa.png"))); // NOI18N
         jButton1.setText("Filme");
@@ -69,14 +146,7 @@ public class TelaAlugarFilme extends javax.swing.JFrame {
         jLabel3.setText("Cliente:");
 
         jTextField2NomeCliente.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-
-        try {
-            jFormattedTextField1DataLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField1DataLocacao.setFocusable(false);
-        jFormattedTextField1DataLocacao.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jTextField2NomeCliente.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,77 +156,168 @@ public class TelaAlugarFilme extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Data de Devolução:");
 
-        try {
-            jFormattedTextField2DataDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField2DataDevolucao.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/lupa.png"))); // NOI18N
         jButton2.setText("Cliente");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3Registrar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jButton3Registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pipoca.png"))); // NOI18N
         jButton3Registrar.setText("Registrar");
+        jButton3Registrar.setEnabled(false);
+        jButton3Registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3RegistrarActionPerformed(evt);
+            }
+        });
+
+        jTable2RegistraFilmes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Titulo", "Preço", "Data Devolução"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2RegistraFilmes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2RegistraFilmesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2RegistraFilmes);
+
+        jTextField1Total.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jTextField1Total.setEnabled(false);
+
+        jLabel6Total.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel6Total.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6Total.setText("Total");
+
+        try {
+            jFormattedTextField1Locacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1Locacao.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jFormattedTextField1Locacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1LocacaoActionPerformed(evt);
+            }
+        });
+
+        try {
+            jFormattedTextField1Devolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1Devolucao.setToolTipText("");
+        jFormattedTextField1Devolucao.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+
+        jButton3AdicionarItem.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jButton3AdicionarItem.setText("Adicionar Item");
+        jButton3AdicionarItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3AdicionarItemActionPerformed(evt);
+            }
+        });
+
+        jButton3Cancelar.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jButton3Cancelar.setText("Cancelar");
+        jButton3Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3CancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2NomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                            .addComponent(jTextField1TituloFilme))
+                        .addComponent(jButton3AdicionarItem)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton3Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel6Total)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1Total))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField1DataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFormattedTextField2DataDevolucao, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFormattedTextField1Locacao, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFormattedTextField1Devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1TituloFilme)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(45, 45, 45)
+                        .addComponent(jTextField2NomeCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField1TituloFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField2NomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextField1DataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1TituloFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2NomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jFormattedTextField2DataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63)
-                .addComponent(jButton3Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addComponent(jFormattedTextField1Locacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField1Devolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jTextField1Total, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3Registrar)
+                        .addComponent(jLabel6Total)
+                        .addComponent(jButton3AdicionarItem, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(13, 13, 13))
         );
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -167,14 +328,16 @@ public class TelaAlugarFilme extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(275, 275, 275)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(275, 275, 275)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,33 +353,144 @@ public class TelaAlugarFilme extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaConsultaItem telaConsultaItem = new TelaConsultaItem();
-        telaConsultaItem.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         TelaPrincipal telaPrincipal = new TelaPrincipal();
         telaPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosed
 
+    private void jButton3RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3RegistrarActionPerformed
+        AlugarController ac = new AlugarController();
+        boolean sucesso = ac.registrarVenda(itensAdicionados);
+        if(sucesso){
+            JOptionPane.showMessageDialog(rootPane, "Venda registrada com sucesso");
+        }
+        TelaCalculoAlugar telaCalculoAlugar = new TelaCalculoAlugar(this.jTextField1Total.getText());
+        telaCalculoAlugar.setVisible(true);
+        limpaTela();
+    }//GEN-LAST:event_jButton3RegistrarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        TelaConsultaCliente telaConsultaCliente = new TelaConsultaCliente(this);
+        telaConsultaCliente.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        TelaConsultaItem telaConsultaItem = new TelaConsultaItem(this);
+        telaConsultaItem.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3AdicionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3AdicionarItemActionPerformed
+       registraItem();
+    }//GEN-LAST:event_jButton3AdicionarItemActionPerformed
+
+    private void jButton3CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3CancelarActionPerformed
+        limpaTela();
+    }//GEN-LAST:event_jButton3CancelarActionPerformed
+
+    private void jTable2RegistraFilmesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2RegistraFilmesMouseClicked
+       if(evt.getClickCount()==2){
+       DefaultTableModel tableModel = (DefaultTableModel) jTable2RegistraFilmes.getModel();
+       Integer idRowSelected = (Integer)tableModel.getValueAt(jTable2RegistraFilmes.getSelectedRow(), 0);
+       boolean sucesso = itensAdicionados.removeIf(x->x.getCodItem()==idRowSelected);
+       if(sucesso){
+           tableModel.setRowCount(0);
+            itensAdicionados.forEach((Item item) ->{
+                tableModel.addRow(new Object[] {
+                    item.getCodItem(),
+                    item.getFilme().getTitulo(),
+                    item.getPreco()
+                });
+                
+            });
+            jTable2RegistraFilmes.setModel(tableModel);
+            Double total = itensAdicionados.stream().mapToDouble(x->x.getPreco()).sum();
+            jTextField1Total.setText(String.format("%.2f",total));
+       }
+       }
+           
+    }//GEN-LAST:event_jTable2RegistraFilmesMouseClicked
+
+    private void jFormattedTextField1LocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1LocacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1LocacaoActionPerformed
+    
+   
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3AdicionarItem;
+    private javax.swing.JButton jButton3Cancelar;
     private javax.swing.JButton jButton3Registrar;
-    private javax.swing.JFormattedTextField jFormattedTextField1DataLocacao;
-    private javax.swing.JFormattedTextField jFormattedTextField2DataDevolucao;
+    private javax.swing.JFormattedTextField jFormattedTextField1Devolucao;
+    private javax.swing.JFormattedTextField jFormattedTextField1Locacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6Total;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2RegistraFilmes;
     private javax.swing.JTextField jTextField1TituloFilme;
+    private javax.swing.JTextField jTextField1Total;
     private javax.swing.JTextField jTextField2NomeCliente;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void limpaTela() {
+        jTextField1TituloFilme.setText("");
+        jTextField1Total.setText("");
+        jTextField2NomeCliente.setText("");
+        itensAdicionados.clear();
+        codItem=0;
+        codCliente=0;
+        titulo=null;
+        tipo=null;
+        preco=null;
+        DefaultTableModel tableModel = (DefaultTableModel) jTable2RegistraFilmes.getModel();
+        tableModel.setRowCount(0);
+        jTable2RegistraFilmes.setModel(tableModel);
+        jButton2.setEnabled(true);
+        jButton3Registrar.setEnabled(false);
+    }
+    
+    public void registraItem(){
+        AlugarController ac =new AlugarController();
+        try{
+            Date dataLocacao = sdf.parse(jFormattedTextField1Locacao.getText());
+            Date dataDevolucao = sdf.parse(jFormattedTextField1Devolucao.getText());
+            if(dataLocacao.after(dataDevolucao)){
+                JOptionPane.showMessageDialog(rootPane, "Data de DEVOLUÇÃO MENOR QUE DATA DE LOCAÇÃO");
+            }else{
+            itensAdicionados = ac.adicionarItens(codItem, codCliente, sdf.parse(jFormattedTextField1Locacao.getText()), sdf.parse(jFormattedTextField1Devolucao.getText()), itensAdicionados, titulo, preco);
+            DefaultTableModel tableModel = (DefaultTableModel)jTable2RegistraFilmes.getModel();
+            tableModel.setRowCount(0);
+            itensAdicionados.forEach((Item item) ->{
+                tableModel.addRow(new Object[] {
+                    item.getCodItem(),
+                    item.getFilme().getTitulo(),
+                    item.getPreco(),
+                    sdf.format(item.getDateDevolucao())
+                });
+                
+            });
+            Double total = itensAdicionados.stream().mapToDouble(x->x.getPreco()).sum();
+            jTextField1Total.setText(String.format("%.2f",total));
+            jTable2RegistraFilmes.setModel(tableModel);
+            jButton2.setEnabled(false);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Informações inválidas,verifique se os campos foram devidamento preenchidos (DATA)","Atenção",1);
+        }
+    }
+    
+
 }

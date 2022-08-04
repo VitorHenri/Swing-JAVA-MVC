@@ -19,10 +19,10 @@ public class ClienteDAO {
     Connection conn = null;
     public void cadastrarCliente(Cliente cliente){
         String sql = "insert into cliente (nome,cpf,email,endereco,dtnascimento) values(?,?,?,?,?)";
-        
+        PreparedStatement pstm = null;
         try{
             conn = DB.createConnection();
-            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm = conn.prepareStatement(sql);
             pstm.setString(1, cliente.getNome());
             pstm.setString(2, cliente.getCpf());
             pstm.setString(3, cliente.getEmail());
@@ -31,6 +31,8 @@ public class ClienteDAO {
             pstm.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
+        }finally{
+            DB.closeConnection(null, pstm, conn);
         }
     }
     
@@ -52,6 +54,8 @@ public class ClienteDAO {
         
         }catch(Exception e){
             e.printStackTrace();
+        }finally{
+            DB.closeConnection(rs, pstm, conn);
         }
         return clientes;
     }
@@ -71,6 +75,8 @@ public class ClienteDAO {
             pstm.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
+        }finally{
+            DB.closeConnection(null, pstm, conn);
         }
     }
     
@@ -85,6 +91,8 @@ public class ClienteDAO {
             
         }catch(Exception e){
             e.printStackTrace();
+        }finally{
+            DB.closeConnection(null, pstm, conn);
         }
     }
 }

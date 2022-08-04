@@ -37,4 +37,15 @@ public class ItemController {
         Item item = new Item();
         return item.deletarItem(codItem);
     }
+    
+    public ArrayList<Item> consultaItensAlugados(String nomeCliente,String titulo){
+        return new Item().consultaItensAlugados(nomeCliente, titulo);
+    }
+    
+    public boolean baixaItem(Integer codItem){
+        if(codItem!=null){
+            return new Item().baixaItem(codItem);
+        }
+        return false;
+    }
 }

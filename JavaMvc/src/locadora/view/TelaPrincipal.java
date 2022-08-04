@@ -44,6 +44,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Cliente = new javax.swing.JMenuItem();
         Filme = new javax.swing.JMenuItem();
         Item = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem3TelaConfig = new javax.swing.JMenuItem();
         jMenu1Sair = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -52,6 +54,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Vídeo Locadora Hora da Pipoca");
+        setResizable(false);
 
         jPanel1Principal.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1Principal.setName(""); // NOI18N
@@ -105,16 +108,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1PrincipalLayout.setHorizontalGroup(
             jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1PrincipalLayout.createSequentialGroup()
-                .addContainerGap(386, Short.MAX_VALUE)
-                .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1RelatorioItem, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33))
-            .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
-                    .addGap(48, 48, 48)
-                    .addComponent(jButton1GerarRF2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(372, Short.MAX_VALUE)))
+                .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1RelatorioItem, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jButton1GerarRF2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(38, 38, 38))
             .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
                     .addGap(45, 45, 45)
@@ -124,19 +127,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1PrincipalLayout.setVerticalGroup(
             jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1GerarRF2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1GerarRF4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(jButton1RelatorioItem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
             .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1PrincipalLayout.createSequentialGroup()
-                    .addGap(44, 44, 44)
-                    .addComponent(jButton1GerarRF2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(238, Short.MAX_VALUE)))
-            .addGroup(jPanel1PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1PrincipalLayout.createSequentialGroup()
-                    .addContainerGap(226, Short.MAX_VALUE)
+                    .addContainerGap(250, Short.MAX_VALUE)
                     .addComponent(jButton1GerarRF3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(56, 56, 56)))
         );
@@ -158,6 +158,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem2Consulta.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jMenuItem2Consulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/seta.png"))); // NOI18N
         jMenuItem2Consulta.setText("Consulta");
+        jMenuItem2Consulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ConsultaActionPerformed(evt);
+            }
+        });
         jMenu1Locacao.add(jMenuItem2Consulta);
 
         jMenuBar1TelaPrincipal.add(jMenu1Locacao);
@@ -208,6 +213,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1TelaPrincipal.add(jMenu2Cadastro);
 
+        jMenu1.setText("Configurações");
+        jMenu1.setToolTipText("");
+        jMenu1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+
+        jMenuItem3TelaConfig.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jMenuItem3TelaConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/seta.png"))); // NOI18N
+        jMenuItem3TelaConfig.setText("Tela de Configurações");
+        jMenuItem3TelaConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3TelaConfigActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3TelaConfig);
+
+        jMenuBar1TelaPrincipal.add(jMenu1);
+
         jMenu1Sair.setText("Sair");
         jMenu1Sair.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jMenu1Sair.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -230,15 +251,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(77, 77, 77)
-                .addComponent(jPanel1Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+                .addComponent(jPanel1Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
                 .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jPanel1Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
+                .addContainerGap()
+                .addComponent(jPanel1Principal, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -299,6 +320,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem1AlugarActionPerformed
 
+    private void jMenuItem2ConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ConsultaActionPerformed
+        TelaItemAlugado telaItemAlugado = new TelaItemAlugado();
+        telaItemAlugado.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem2ConsultaActionPerformed
+
+    private void jMenuItem3TelaConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3TelaConfigActionPerformed
+        TelaConfiguracaoSistema telaConfiguracoesSistema = new TelaConfiguracaoSistema();
+        telaConfiguracoesSistema.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem3TelaConfigActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -342,6 +375,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1GerarRF3;
     private javax.swing.JButton jButton1GerarRF4;
     private javax.swing.JButton jButton1RelatorioItem;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu1Locacao;
     private javax.swing.JMenu jMenu1Sair;
     private javax.swing.JMenu jMenu2Cadastro;
@@ -351,6 +385,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem2Ator;
     private javax.swing.JMenuItem jMenuItem2Consulta;
+    private javax.swing.JMenuItem jMenuItem3TelaConfig;
     private javax.swing.JPanel jPanel1Principal;
     // End of variables declaration//GEN-END:variables
 }

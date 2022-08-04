@@ -44,6 +44,10 @@ public class Filme {
         this.titulo = titulo;
         this.codFilme = codFilme;
     }
+
+    public Filme(String titulo) {
+        this.titulo = titulo;
+    }
     
     
 

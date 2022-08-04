@@ -17,6 +17,8 @@ import locadora.model.Cliente;
 public class TelaConsultaCliente extends javax.swing.JFrame {
     private TelaCadastroCliente telaCadastroCliente;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private TelaAlugarFilme telaAlugarFilme;
+    private TelaItemAlugado telaItemAlugado;
     /**
      * Creates new form TelaConsultaCliente
      */
@@ -24,10 +26,20 @@ public class TelaConsultaCliente extends javax.swing.JFrame {
         initComponents();
     }
     
+    public TelaConsultaCliente(TelaAlugarFilme telaAlugarFilme){
+        initComponents();
+        this.telaAlugarFilme = telaAlugarFilme;
+    }
+    
     public TelaConsultaCliente(TelaCadastroCliente telaCadastroCliente){
         this.telaCadastroCliente = telaCadastroCliente;
         initComponents();
         
+    }
+    
+    public TelaConsultaCliente(TelaItemAlugado telaItemAlugado){
+        initComponents();
+        this.telaItemAlugado = telaItemAlugado;
     }
 
     /**
@@ -168,7 +180,12 @@ public class TelaConsultaCliente extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         this.dispose();
-        telaCadastroCliente.setVisible(true);
+        if(telaCadastroCliente!=null)
+            telaCadastroCliente.setVisible(true);
+        else if(telaAlugarFilme!=null)
+            telaAlugarFilme.setVisible(true);
+        else
+            telaItemAlugado.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1ConsultaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ConsultaClienteActionPerformed
@@ -206,8 +223,16 @@ public class TelaConsultaCliente extends javax.swing.JFrame {
             String dtNascimento  = (String)jTable1ResultadoCliente.getModel().getValueAt(jTable1ResultadoCliente.getSelectedRow(), 5);
             cpf = cpf.replace(".", "");
             dtNascimento = dtNascimento.replace("/", "");
+            if(telaCadastroCliente!=null){
             telaCadastroCliente.buscarCliente(id, nome, cpf, email, endereco, dtNascimento);
             telaCadastroCliente.setVisible(true);
+            }else if(telaAlugarFilme!=null){
+                telaAlugarFilme.buscarCliente(id,nome);
+                telaAlugarFilme.setVisible(true);
+            }else{
+                telaItemAlugado.buscarCliente(nome);
+                telaItemAlugado.setVisible(true);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_jTable1ResultadoClienteMouseClicked

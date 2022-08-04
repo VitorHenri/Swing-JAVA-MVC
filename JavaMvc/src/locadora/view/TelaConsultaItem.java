@@ -4,9 +4,15 @@
  */
 package locadora.view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import locadora.controller.ItemController;
 import locadora.model.Item;
 
@@ -14,25 +20,42 @@ import locadora.model.Item;
  *
  * @author Usuario
  */
-public class TelaConsultaItem extends javax.swing.JFrame {
+public class TelaConsultaItem extends javax.swing.JFrame  {
     TelaCadastroItem telaCadastroItem = null;
     TelaAlugarFilme telaAlugarFilme = null;
+    TelaItemAlugado telaItemAlugado = null;
+    TelaConfiguracaoSistema telaConfiguracaoSistema = null;
+    Color bg =null;
+    
+    
     /**
      * Creates new form TelaConsultaItem
      */
     public TelaConsultaItem() {
         initComponents();
+        telaConfiguracaoSistema = new TelaConfiguracaoSistema();
     }
+    
     
     public TelaConsultaItem(TelaCadastroItem telaCadastroItem){
         initComponents();
         this.telaCadastroItem = telaCadastroItem;
+        telaConfiguracaoSistema = new TelaConfiguracaoSistema();
     }
     
     public TelaConsultaItem(TelaAlugarFilme telaAlugarFilme){
         initComponents();
         this.telaAlugarFilme = telaAlugarFilme;
+        telaConfiguracaoSistema = new TelaConfiguracaoSistema();
     }
+    
+    public TelaConsultaItem(TelaItemAlugado telaItemAlugado){
+        initComponents();
+        this.telaItemAlugado = telaItemAlugado;
+        telaConfiguracaoSistema = new TelaConfiguracaoSistema();
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,14 +95,14 @@ public class TelaConsultaItem extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código Item", "Código Filme", "Título", "Tipo", "Preço"
+                "Código Item", "Código Filme", "Título", "Tipo", "Preço", "Alugado(CodCliente)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -110,34 +133,33 @@ public class TelaConsultaItem extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1TituloFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1BuscarFilme))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1TituloFilme, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150)
+                .addComponent(jButton1BuscarFilme)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1TituloFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addComponent(jButton1BuscarFilme))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton1BuscarFilme)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1TituloFilme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -173,7 +195,12 @@ public class TelaConsultaItem extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         this.dispose();
-        telaCadastroItem.setVisible(true);
+        if(telaCadastroItem!=null)
+            telaCadastroItem.setVisible(true);
+        else if(telaAlugarFilme!=null)
+            telaAlugarFilme.setVisible(true);
+        else
+            telaItemAlugado.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1BuscarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1BuscarFilmeActionPerformed
@@ -189,8 +216,34 @@ public class TelaConsultaItem extends javax.swing.JFrame {
                    item.getFilme().getCodFilme(),
                    item.getFilme().getTitulo(),
                    item.getTipo(),
-                   item.getPreco()
+                   item.getPreco(),
+                   item.getCliente().getCodCliente()
                });
+            });
+            
+            if(telaConfiguracaoSistema!=null){
+                String cor = telaConfiguracaoSistema.getCorAlugado();
+                if(cor.equals("Amarelo")){
+                    bg = Color.YELLOW;
+                }else if (cor.equals("Vermelho")){
+                    bg = Color.RED;
+                }else if(cor.equals("Azul")){
+                    bg = Color.BLUE;
+                }
+            }
+            
+            jTable1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if((Integer)table.getValueAt(row, 5)!=0)
+                    label.setBackground(bg);
+                else{
+                    label.setBackground(Color.WHITE);
+                    label.setForeground(Color.BLACK);
+                }
+                return label;
+                }
             });
             jTable1.setModel(tableModel);
         }catch(Exception e){
@@ -205,13 +258,21 @@ public class TelaConsultaItem extends javax.swing.JFrame {
             String titulo = (String)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
             String tipo = (String)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3);
             Double preco = (Double)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
+            if(telaCadastroItem!=null){
             JOptionPane.showMessageDialog(rootPane, "Atualize os dados desse Item");
             telaCadastroItem.buscarItem(codFilme, codItem,titulo,tipo,preco);
             telaCadastroItem.setVisible(true);
+            }else if(telaAlugarFilme!=null){
+                telaAlugarFilme.buscarItem(codItem, titulo, tipo, preco);
+                telaAlugarFilme.setVisible(true);
+            }else{
+                telaItemAlugado.buscarItem(titulo);
+                telaItemAlugado.setVisible(true);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_jTable1MouseClicked
-
+   
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -223,4 +284,6 @@ public class TelaConsultaItem extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1TituloFilme;
     // End of variables declaration//GEN-END:variables
+
+    
 }

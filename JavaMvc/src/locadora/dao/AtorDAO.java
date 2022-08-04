@@ -31,15 +31,7 @@ public class AtorDAO {
         }catch(Exception e){
             throw new ExceptionDAO("Erro ao cadastrar");
         }finally{
-            
-            try{
-            if(pstm!= null && conn!=null){
-                pstm.close();
-                conn.close();
-            }
-            }catch(Exception e){
-                
-            }
+           DB.closeConnection(null,pstm,conn);
         }
     }
     
@@ -60,12 +52,7 @@ public class AtorDAO {
         }catch(Exception e){
            e.printStackTrace();
         }finally{
-            try{
-                pstm.close();
-                rs.close();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+            DB.closeConnection(rs,pstm,conn);
         }
       return atores;
     }
@@ -84,12 +71,7 @@ public class AtorDAO {
        }catch(Exception e){
            e.printStackTrace();
        }finally{
-           try{
-               conn.close();
-               pstm.close();
-           }catch(Exception e){
-               e.printStackTrace();
-           }
+           DB.closeConnection(null, pstm, conn);
        }
     }
     
@@ -102,6 +84,8 @@ public class AtorDAO {
             pstm.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
+        }finally{
+            DB.closeConnection(null, pstm, conn);
         }
     }
     
